@@ -1,8 +1,9 @@
 package main
 
 import (
-	r "github.com/dancannon/gorethink"
 	"log"
+
+	r "github.com/dancannon/gorethink"
 )
 
 func allChanges(ch chan interface{}) {

@@ -1,11 +1,12 @@
 package main
 
 import (
-	r "github.com/dancannon/gorethink"
-	"github.com/gorilla/mux"
 	"log"
 	"net/http"
 	"time"
+
+	r "github.com/dancannon/gorethink"
+	"github.com/gorilla/mux"
 )
 
 var (
@@ -17,12 +18,23 @@ func init() {
 	var err error
 
 	session, err = r.Connect(r.ConnectOpts{
-		Address:  "localhost:28015",
+		Address:  "rethinkdb-internal:28015",
 		Database: "todo",
 		MaxOpen:  40,
 	})
 	if err != nil {
 		log.Fatalln(err.Error())
+	}
+
+	err = r.DBCreate("todo").Exec(session)
+	if err != nil {
+		log.Fatalln(err.Error())
+		return
+	}
+	err = r.TableCreate("items").Exec(session)
+	if err != nil {
+		log.Fatalln(err.Error())
+		return
 	}
 }
 

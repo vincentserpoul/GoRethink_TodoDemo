@@ -13,7 +13,8 @@ var templates *template.Template
 func init() {
 	filenames := []string{}
 	err := filepath.Walk("templates", func(path string, info os.FileInfo, err error) error {
-		if !info.IsDir() && filepath.Ext(path) == ".gohtml" {
+		if !info.IsDir() &&
+			filepath.Ext(path) == ".gohtml" {
 			filenames = append(filenames, path)
 		}
 
